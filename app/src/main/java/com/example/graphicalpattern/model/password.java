@@ -8,5 +8,4 @@ public class password {
     public String FIRST_USE = "Draw an unlock pattern please ";
     public String SCHEMA_FAILED = "You must at least connect 4 dots";
 
-
 }

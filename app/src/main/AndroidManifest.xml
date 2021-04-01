@@ -11,13 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GraphicalPattern" >
-        <activity android:name=".appList" >
-
-        </activity>
+        android:theme="@style/AppTheme" >
+        <activity android:name=".appList" />
         <activity android:name=".ForgetPattern" />
         <activity android:name=".PatternPage" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".Register" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

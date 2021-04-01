@@ -27,8 +27,16 @@ public class ForgetPattern extends AppCompatActivity {
         ValidateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent3 = new Intent(ForgetPattern.this,PatternPage.class);
+                Intent intent3 = new Intent(ForgetPattern.this,appList.class);
                 startActivity(intent3);
+            }
+        });
+
+        PatternBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i2 = new Intent(ForgetPattern.this,PatternPage.class);
+                startActivity(i2);
             }
         });
     }
