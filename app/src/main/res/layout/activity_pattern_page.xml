@@ -4,14 +4,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/main_layout"
     android:background="#D3D3D3">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/green"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.shuhart.stepview.StepView
+            android:id="@+id/stepview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+         <LinearLayout
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             android:gravity="center"
+             android:layout_weight="1"
+             android:id="@+id/ll"
+             android:orientation="horizontal">
+             <ImageView
+                 android:layout_width="32dp"
+                 android:layout_height="32dp"
+                 android:layout_margin="4dp"
+                 android:layout_gravity="left"
+                 android:src="@drawable/ic_baseline_lock_open_24" />
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:orientation="vertical">
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_margin="4dp"
+                     android:layout_weight="1"
+                     android:text="POWERED BY"
+                     android:textSize="15sp"/>
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:textSize="18sp"
+                     android:textStyle="bold"
+                     android:text="GRAT"/>
+             </LinearLayout>
+
+         </LinearLayout>
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:id="@+id/msg_dis"
+        android:id="@+id/state_text"
         android:text="Message!"
+        android:textStyle="bold"
         android:textSize="20sp"/>
 
         <GridView
@@ -20,21 +69,15 @@
             android:layout_height="wrap_content"
             android:columnWidth="60dp"
             android:gravity="center"
-            android:horizontalSpacing="5dp"
-            android:padding="5dp"
             android:numColumns="3"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="2dp">
-        </GridView>
-
-
-
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_weight="1">
-
         <Button
             android:id="@+id/btnForgot"
             android:layout_width="wrap_content"
@@ -42,7 +85,6 @@
             android:text="Forgot Pattern"
             android:layout_marginRight="5dp"
             />
-
         <Button
             android:id="@+id/btnOkay"
             android:layout_width="wrap_content"
@@ -50,8 +92,4 @@
             android:layout_marginLeft="5dp"
             android:text="Okay!" />
     </LinearLayout>
-
-
-
-
 </LinearLayout>

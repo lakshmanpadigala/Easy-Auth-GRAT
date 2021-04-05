@@ -1,23 +1,17 @@
 package com.example.graphicalpattern;
 
-        import android.content.Context;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.BaseAdapter;
-        import android.widget.ImageView;
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 
-        import java.sql.Array;
-        import java.util.ArrayList;
-        import java.util.Arrays;
-        import java.util.List;
-        import java.util.Collections;
-        import java.util.Random;
-        import androidx.gridlayout.widget.GridLayout;
+import java.util.Random;
 
 public class ImageAdapter extends BaseAdapter {
 
     private Context mContext;
-
+    public static String []img ={"img1","img2","img3","img4","img5","img6","img7","img8","img9"};
     int []arr={R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8,R.drawable.img9};
 
     Random rand = new Random();
@@ -31,6 +25,9 @@ public class ImageAdapter extends BaseAdapter {
             int temp = arr[randomIndexToSwap];
             arr[randomIndexToSwap] = arr[i];
             arr[i] = temp;
+            String temp1= img[randomIndexToSwap];
+            img[randomIndexToSwap]=img[i];
+            img[i]=temp1;
         }
 
     }
@@ -60,5 +57,7 @@ public class ImageAdapter extends BaseAdapter {
 
         return imageView;
     }
+    public static String[] arrret(){
+        return img;
+    }
 }
-
