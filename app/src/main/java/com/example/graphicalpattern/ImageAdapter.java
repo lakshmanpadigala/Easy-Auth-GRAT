@@ -10,16 +10,19 @@ import java.util.Random;
 
 public class ImageAdapter extends BaseAdapter {
 
-    private Context mContext;
+    public Context mContext;
     public static String []img ={"img1","img2","img3","img4","img5","img6","img7","img8","img9"};
-    int []arr={R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8,R.drawable.img9};
 
+    static int []arr={R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8,R.drawable.img9};
+    //int []arr1={R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8,R.drawable.img9};
     Random rand = new Random();
     int l=arr.length;
 
     public ImageAdapter(Context mContext) {
         this.mContext = mContext;
-
+        //for(int i=0;i<arr.length;i++){
+          //  arr[i] = arr1[i];
+        //}
         for(int i = 0; i < l; i++) {
             int randomIndexToSwap = rand.nextInt(arr.length);
             int temp = arr[randomIndexToSwap];
@@ -29,8 +32,19 @@ public class ImageAdapter extends BaseAdapter {
             img[randomIndexToSwap]=img[i];
             img[i]=temp1;
         }
-
     }
+
+    /*public void swap(){
+        for(int i = 0; i < l; i++) {
+            int randomIndexToSwap = rand.nextInt(arr.length);
+            int temp = arr[randomIndexToSwap];
+            arr[randomIndexToSwap] = arr[i];
+            arr[i] = temp;
+            String temp1= img[randomIndexToSwap];
+            img[randomIndexToSwap]=img[i];
+            img[i]=temp1;
+        }
+    }*/
 
     @Override
     public int getCount() {
@@ -57,7 +71,7 @@ public class ImageAdapter extends BaseAdapter {
 
         return imageView;
     }
-    public static String[] arrret(){
-        return img;
+    public static int[] arrret(){
+        return arr;
     }
 }

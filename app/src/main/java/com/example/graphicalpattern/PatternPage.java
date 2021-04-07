@@ -35,7 +35,7 @@ public class PatternPage extends AppCompatActivity {
 
     //String[] img = {"p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"};
     //public static String []img ={"img1","img2","img3","img4","img5","img6","img7","img8","img9"};
-    public static String[] img;
+    public static int[] img;
     public int[] arr = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +74,9 @@ public class PatternPage extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("position:"+position);
-                System.out.println(img[0]);
-                password += position;
+                //System.out.println("position:"+position);
+                //System.out.println(img[0]);
+                password += img[position];
                 Toast.makeText(getApplicationContext(), "Hello There!" + password, Toast.LENGTH_SHORT).show();
             }
         });
@@ -99,9 +99,9 @@ public class PatternPage extends AppCompatActivity {
                     return;
                 }
                 if(Mpassword.getPASSWORD_KEY()==null){
-                    if(Mpassword.isFirst){
+                    if(Mpassword.getFirst().equals("true")){
                         userPassword=password;
-                        Mpassword.setFirst(false);
+                        Mpassword.setFirst("false");
                         stateText.setText(Mpassword.CONFIRM_PATTERN);
                         stepView.go(1,true);
                     }else{
@@ -130,9 +130,9 @@ public class PatternPage extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(Mpassword.getPASSWORD_KEY()==null && !Mpassword.isFirst){
+        if(Mpassword.getPASSWORD_KEY()==null && !Mpassword.getFirst().equals("true")){
             stepView.go(0,true);
-            Mpassword.setFirst(true);
+            Mpassword.setFirst("true");
             stateText.setText(Mpassword.FIRST_USE);
 
         }else{

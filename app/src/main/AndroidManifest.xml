@@ -14,18 +14,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Navigator"></activity>
+        <activity android:name=".Navigator" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".appList"
-            android:theme="@style/FULLSCREEN"></activity>
+            android:theme="@style/FULLSCREEN" />
         <activity android:name=".ForgetPattern" />
         <activity android:name=".PatternPage" />
         <activity android:name=".Register">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

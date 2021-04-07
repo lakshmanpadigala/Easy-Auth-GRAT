@@ -7,7 +7,7 @@ import io.paperdb.Paper;
 public class username {
     private String username="USER_NAME";
     private String password="PSW";
-    public Boolean isFirstTime=true;
+    public boolean isFirstTime=true;
 
     public username(Context context) {
         Paper.init(context);
