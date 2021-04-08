@@ -11,13 +11,19 @@ public class password {
     public String INCORRECT_PATTERN = "Please try again ";
     public String FIRST_USE = "Draw an unlock pattern please ";
     public String SCHEMA_FAILED = "You must at least connect 4 dots";
-    public static String isFirst="true";
+    public boolean isFirst=true;
 
     public password(Context context){
         Paper.init(context);
-        Paper.book().write(isFirst, "true");
-        System.out.println("From Paper init!");
-        System.out.println((String) Paper.book().read(isFirst));
+        //List<String> allKeys=Paper.book().getAllKeys();
+        //if(allKeys.size()==0){
+        Paper.book().write("isFirst", true);
+        //}else {
+          //  Paper.book().write(isFirst,"false");
+       // }
+
+        //System.out.println("From Paper init!");
+        //System.out.println((String) Paper.book().read(isFirst));
     }
 
     public String getPASSWORD_KEY() {
@@ -25,18 +31,21 @@ public class password {
     }
 
     public void setPASSWORD_KEY(String PASS) {
+        //Paper.book().write("isFirst", false);
         Paper.book().write(PASSWORD_KEY,PASS);
     }
-
-
-    public String getFirst() {
-        //return isFirst;
-        return Paper.book().read(isFirst);
+    public void onDelete(){
+        Paper.book().delete(PASSWORD_KEY);
     }
 
-    public void setFirst( String first) {
+    public Boolean getFirst() {
+        //return isFirst;
+        return Paper.book().read("isFirst");
+    }
+
+    public void setFirst( Boolean first) {
         //isFirst = first;
-        Paper.book().write(isFirst, first);
+        Paper.book().write("isFirst", first);
         System.out.println("From setfirst function..!");
     }
     public Boolean isCorrect(String PASS){

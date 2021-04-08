@@ -25,5 +25,17 @@ public class Navigator extends AppCompatActivity {
             System.out.println("from navigator else condition!");
         }
         finish();
+
+        /*Globals g = (Globals)getApplication();
+        String data=g.getData();
+        if(data.equals("NEW")){
+            Intent intent = new Intent(this,Register.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(this,PatternPage.class);
+            startActivity(intent);
+        }
+        finish();*/
     }
 }

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.graphicalpattern.model.password;
 import com.example.graphicalpattern.model.username;
 
 public class ForgetPattern extends AppCompatActivity {
@@ -28,6 +29,8 @@ public class ForgetPattern extends AppCompatActivity {
         fpsw = (EditText)findViewById(R.id.uPsw);
 
         username MForgot = new username(this);
+        password p1 = new password(this);
+
 
 
         PatternBtn.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +50,11 @@ public class ForgetPattern extends AppCompatActivity {
                 String d=MForgot.getPassword();
                 System.out.println("c:"+c+"---d:"+d);
                 if(a.equals(c) && b.equals(d)){
-                    Intent intent3 = new Intent(ForgetPattern.this,appList.class);
+                    //MForgot.setVariableF(true);
+                    p1.setFirst(true);
+                    p1.onDelete();
+                    //p1.setPASSWORD_KEY(null);
+                    Intent intent3 = new Intent(ForgetPattern.this,PatternPage.class);
                     startActivity(intent3);
                 }
                 else{

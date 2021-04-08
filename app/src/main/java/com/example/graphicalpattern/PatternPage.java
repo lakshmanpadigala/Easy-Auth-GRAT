@@ -30,7 +30,8 @@ public class PatternPage extends AppCompatActivity {
     String userPassword;
     TextView stateText;
     //
-
+    //Global declaration.....
+    //Globals g1 = (Globals)getApplication();
 
 
     //String[] img = {"p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"};
@@ -48,19 +49,7 @@ public class PatternPage extends AppCompatActivity {
         linearLayout=findViewById(R.id.ll);
         Mpassword=new password(this);
         stateText=findViewById(R.id.state_text);
-        stateText.setText(Mpassword.FIRST_USE);
-        if(Mpassword.getPASSWORD_KEY()==null){
-            linearLayout.setVisibility(View.GONE);
-            stepView.setVisibility(View.VISIBLE);
-            stepView.setStepsNumber(2);
-            stepView.go(0,true);
-        }else{
-            linearLayout.setVisibility(View.VISIBLE);
-            stepView.setVisibility(View.GONE);
-            int BackgroundColor= ResourcesCompat.getColor(getResources(),R.color.GREY,null);
-            linearLayout_r.setBackgroundColor(BackgroundColor);
-            stateText.setTextColor(Color.WHITE);
-        }
+
         //
 
 
@@ -99,9 +88,11 @@ public class PatternPage extends AppCompatActivity {
                     return;
                 }
                 if(Mpassword.getPASSWORD_KEY()==null){
-                    if(Mpassword.getFirst().equals("true")){
+                    //g1.getData().equals("NEW")
+                    if(Mpassword.getFirst()){
                         userPassword=password;
-                        Mpassword.setFirst("false");
+                        Mpassword.setFirst(false);
+                        //g1.setData("OLD");
                         stateText.setText(Mpassword.CONFIRM_PATTERN);
                         stepView.go(1,true);
                     }else{
@@ -129,10 +120,34 @@ public class PatternPage extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        if(Mpassword.getPASSWORD_KEY()==null && !Mpassword.getFirst().equals("true")){
+    protected void onResume() {
+        System.out.println("Resume is happening!"+"okay...!");
+        //System.out.println(Mpassword.getPASSWORD_KEY());
+        stateText.setText(Mpassword.FIRST_USE);
+        if(Mpassword.getPASSWORD_KEY()==null){
+            System.out.println("From Here!");
+            linearLayout.setVisibility(View.GONE);
+            stepView.setVisibility(View.VISIBLE);
+            stepView.setStepsNumber(2);
             stepView.go(0,true);
-            Mpassword.setFirst("true");
+        }else{
+            System.out.println("Not From there!");
+            linearLayout.setVisibility(View.VISIBLE);
+            stepView.setVisibility(View.GONE);
+            int BackgroundColor= ResourcesCompat.getColor(getResources(),R.color.GREY,null);
+            linearLayout_r.setBackgroundColor(BackgroundColor);
+            stateText.setTextColor(Color.WHITE);
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //g1.getData().equals("OLD")
+        if(Mpassword.getPASSWORD_KEY()==null && !Mpassword.getFirst()){
+            stepView.go(0,true);
+            Mpassword.setFirst(true);
+            //g1.setData("NEW");
             stateText.setText(Mpassword.FIRST_USE);
 
         }else{

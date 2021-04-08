@@ -37,6 +37,10 @@ public class username {
         isFirstTime = firstTime;
     }
 
+    public void setVariableF(Boolean f1){
+        Paper.book().write("isFirst",f1);
+    }
+
     public  Boolean isRight(String usn,String psw){
         return psw.equals(getPassword()) && usn.equals(getUsername());
     }
