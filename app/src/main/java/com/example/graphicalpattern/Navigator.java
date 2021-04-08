@@ -15,11 +15,12 @@ public class Navigator extends AppCompatActivity {
         setContentView(R.layout.activity_navigator);
 
         password MNavigator = new password(this);
-        if(MNavigator.getFirst().equals("true")){
+        if(MNavigator.getFirst()==null){
             Intent x=new Intent(Navigator.this,Register.class);
             startActivity(x);
             System.out.println("from navigator if condition!");
         }else{
+            System.out.println("here getfirst value "+MNavigator.getFirst());
             Intent y = new Intent(Navigator.this,PatternPage.class);
             startActivity(y);
             System.out.println("from navigator else condition!");

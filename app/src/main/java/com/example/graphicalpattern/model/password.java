@@ -11,13 +11,13 @@ public class password {
     public String INCORRECT_PATTERN = "Please try again ";
     public String FIRST_USE = "Draw an unlock pattern please ";
     public String SCHEMA_FAILED = "You must at least connect 4 dots";
-    public boolean isFirst=true;
+    public String isFirst="true";
 
     public password(Context context){
         Paper.init(context);
         //List<String> allKeys=Paper.book().getAllKeys();
         //if(allKeys.size()==0){
-        Paper.book().write("isFirst", true);
+        //////Paper.book().write(isFirst, "true");
         //}else {
           //  Paper.book().write(isFirst,"false");
        // }
@@ -38,14 +38,18 @@ public class password {
         Paper.book().delete(PASSWORD_KEY);
     }
 
-    public Boolean getFirst() {
-        //return isFirst;
-        return Paper.book().read("isFirst");
+    public  void onDeletefirst(){
+        Paper.book().delete(isFirst);
     }
 
-    public void setFirst( Boolean first) {
+    public String getFirst() {
+        //return isFirst;
+        return Paper.book().read(isFirst);
+    }
+
+    public void setFirst( String first) {
         //isFirst = first;
-        Paper.book().write("isFirst", first);
+        Paper.book().write(isFirst, first);
         System.out.println("From setfirst function..!");
     }
     public Boolean isCorrect(String PASS){

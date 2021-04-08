@@ -89,9 +89,10 @@ public class PatternPage extends AppCompatActivity {
                 }
                 if(Mpassword.getPASSWORD_KEY()==null){
                     //g1.getData().equals("NEW")
-                    if(Mpassword.getFirst()){
+                    //error:  Mpassword.getFirst().equals("true")
+                    if(Mpassword.getFirst()==null){
                         userPassword=password;
-                        Mpassword.setFirst(false);
+                        Mpassword.setFirst("false");
                         //g1.setData("OLD");
                         stateText.setText(Mpassword.CONFIRM_PATTERN);
                         stepView.go(1,true);
@@ -101,6 +102,7 @@ public class PatternPage extends AppCompatActivity {
                             stateText.setText(Mpassword.PATTERN_SET);
                             stepView.done(true);
                             gotoAppList();
+                            finish();
                         }else{
                             stateText.setText(Mpassword.PATTERN_SET);
                         }
@@ -108,7 +110,9 @@ public class PatternPage extends AppCompatActivity {
                 }else{
                     if(Mpassword.isCorrect(password)){
                         stateText.setText(Mpassword.PATTERN_SET);
+                        System.out.println("gotoapplist");
                         gotoAppList();
+                        finish();
                     }else{
                         stateText.setText(Mpassword.INCORRECT_PATTERN);
                     }
@@ -144,9 +148,9 @@ public class PatternPage extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //g1.getData().equals("OLD")
-        if(Mpassword.getPASSWORD_KEY()==null && !Mpassword.getFirst()){
+        if(Mpassword.getPASSWORD_KEY()==null && !Mpassword.getFirst().equals("true")){
             stepView.go(0,true);
-            Mpassword.setFirst(true);
+            Mpassword.setFirst("true");
             //g1.setData("NEW");
             stateText.setText(Mpassword.FIRST_USE);
 
@@ -160,7 +164,6 @@ public class PatternPage extends AppCompatActivity {
         System.out.println("happy to see the applist!");
         Intent ia = new Intent(PatternPage.this,appList.class);
         startActivity(ia);
-        finish();
     }
 
 }

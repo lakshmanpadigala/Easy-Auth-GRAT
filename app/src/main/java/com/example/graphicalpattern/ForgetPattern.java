@@ -51,11 +51,13 @@ public class ForgetPattern extends AppCompatActivity {
                 System.out.println("c:"+c+"---d:"+d);
                 if(a.equals(c) && b.equals(d)){
                     //MForgot.setVariableF(true);
-                    p1.setFirst(true);
+                    //p1.setFirst(null);
                     p1.onDelete();
+                    p1.onDeletefirst();
                     //p1.setPASSWORD_KEY(null);
                     Intent intent3 = new Intent(ForgetPattern.this,PatternPage.class);
                     startActivity(intent3);
+                    finish();
                 }
                 else{
                     uN.setText("");
