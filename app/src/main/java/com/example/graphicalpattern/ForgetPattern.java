@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.graphicalpattern.model.password;
 import com.example.graphicalpattern.model.username;
 
+import io.paperdb.Paper;
+
 public class ForgetPattern extends AppCompatActivity {
     private Button ValidateBtn;
     private Button PatternBtn;
@@ -52,6 +54,7 @@ public class ForgetPattern extends AppCompatActivity {
                 if(a.equals(c) && b.equals(d)){
                     //MForgot.setVariableF(true);
                     //p1.setFirst(null);
+                    Paper.book().write("count",3);
                     p1.onDelete();
                     p1.onDeletefirst();
                     //p1.setPASSWORD_KEY(null);

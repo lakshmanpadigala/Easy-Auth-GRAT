@@ -9,13 +9,14 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.graphicalpattern.model.password;
 import com.shuhart.stepview.StepView;
+
+import io.paperdb.Paper;
 
 public class PatternPage extends AppCompatActivity {
     private Button btnForgotPattern;
@@ -37,12 +38,19 @@ public class PatternPage extends AppCompatActivity {
     //String[] img = {"p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"};
     //public static String []img ={"img1","img2","img3","img4","img5","img6","img7","img8","img9"};
     public static int[] img;
-    public int[] arr = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9};
+    public static int[] arr;
+    public int[] panda= {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9};
+    public int[] random={R.drawable.p1,R.drawable.p2,R.drawable.p3,R.drawable.p4,R.drawable.p5,R.drawable.p6,R.drawable.p7,R.drawable.p8,R.drawable.p9};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern_page);
-
+        Paper.init(this);
+        if(Paper.book().read("count")==null){
+            Paper.book().write("count",3);
+        }
+        final int[] count = {Paper.book().read("count")};
+        System.out.println("on create ki vachanu");
         //
         stepView = findViewById(R.id.stepview);
         linearLayout_r = findViewById(R.id.main_layout);
@@ -50,23 +58,40 @@ public class PatternPage extends AppCompatActivity {
         Mpassword=new password(this);
         stateText=findViewById(R.id.state_text);
 
-        //
+
 
 
         btnForgotPattern = (Button) findViewById(R.id.btnForgot);
         btnOk = (Button) findViewById(R.id.btnOkay);
-
+        /////////btnOk.setEnabled(true);
+        if(Paper.book().read("count").equals(0)){
+            stateText.setText(Mpassword.INCORRECT_PATTERN3);
+            btnOk.setEnabled(false);
+            System.out.println(Paper.book().read("count")+":count 0 from here");
+        }
         gridView = (GridView)findViewById(R.id.grid_view);
+        ImageAdapter imgadp = new ImageAdapter(this);
 
-        gridView.setAdapter(new ImageAdapter(this));
-        img = ImageAdapter.arrret();
+        String category=Paper.book().read("category");
+        System.out.println(category+" .see here for category!");
+        if(category.equals("Panda")){
+            arr = panda;
+            imgadp.getType(panda);
+        }else{
+            arr = random;
+            imgadp.getType(random);
+        }
+        imgadp.swap();
+        gridView.setAdapter(imgadp);
+        img = imgadp.arret();
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //System.out.println("position:"+position);
                 //System.out.println(img[0]);
                 password += img[position];
-                Toast.makeText(getApplicationContext(), "Hello There!" + password, Toast.LENGTH_SHORT).show();
+                System.out.println("password:"+password);
+                //Toast.makeText(getApplicationContext(), "Hello There!" + password, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -82,7 +107,12 @@ public class PatternPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //
-                if(password.length()<4){
+                if(Paper.book().read("count").equals(3) || Paper.book().read("count").equals(2)||Paper.book().read("count").equals(1)){
+                    btnOk.setEnabled(true);
+                }else{
+                    btnOk.setEnabled(false);
+                }
+                if(password.length()<30){
                     stateText.setText(Mpassword.SCHEMA_FAILED);
                     password="";
                     return;
@@ -96,15 +126,19 @@ public class PatternPage extends AppCompatActivity {
                         //g1.setData("OLD");
                         stateText.setText(Mpassword.CONFIRM_PATTERN);
                         stepView.go(1,true);
+                        imgadp.swap();
+                        gridView.setAdapter(imgadp);
+
                     }else{
                         if(userPassword.equals(password)){
                             Mpassword.setPASSWORD_KEY(password);
+                            Paper.book().write("count",3);
                             stateText.setText(Mpassword.PATTERN_SET);
                             stepView.done(true);
                             gotoAppList();
                             finish();
                         }else{
-                            stateText.setText(Mpassword.PATTERN_SET);
+                            stateText.setText(Mpassword.PATTERN_NOT_SAME);
                         }
                     }
                 }else{
@@ -114,7 +148,20 @@ public class PatternPage extends AppCompatActivity {
                         gotoAppList();
                         finish();
                     }else{
-                        stateText.setText(Mpassword.INCORRECT_PATTERN);
+                        if(count[0] ==3){
+                            stateText.setText(Mpassword.INCORRECT_PATTERN1);
+                            count[0]--;
+                            Paper.book().write("count",count[0]);
+                        }else if(count[0] == 2){
+                            stateText.setText(Mpassword.INCORRECT_PATTERN2);
+                            count[0]--;
+                            Paper.book().write("count",count[0]);
+                        }else if(count[0] == 1){
+                            stateText.setText(Mpassword.INCORRECT_PATTERN3);
+                            count[0]--;
+                            Paper.book().write("count",count[0]);
+                            //btnOk.setEnabled(false);
+                        }
                     }
                 }
                 password="";
@@ -128,8 +175,10 @@ public class PatternPage extends AppCompatActivity {
         System.out.println("Resume is happening!"+"okay...!");
         //System.out.println(Mpassword.getPASSWORD_KEY());
         stateText.setText(Mpassword.FIRST_USE);
+        btnOk.setEnabled(true);
         if(Mpassword.getPASSWORD_KEY()==null){
             System.out.println("From Here!");
+
             linearLayout.setVisibility(View.GONE);
             stepView.setVisibility(View.VISIBLE);
             stepView.setStepsNumber(2);
@@ -153,7 +202,6 @@ public class PatternPage extends AppCompatActivity {
             Mpassword.setFirst("true");
             //g1.setData("NEW");
             stateText.setText(Mpassword.FIRST_USE);
-
         }else{
             finish();
             super.onBackPressed();

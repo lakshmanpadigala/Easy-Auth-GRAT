@@ -1,11 +1,9 @@
 <resources>
     <string name="app_name">Graphical Pattern</string>
     <string-array name="category">
-        <item>Select</item>
-        <item>Animals</item>
-        <item>Birds</item>
-        <item>Nature</item>
-        <item>composite</item>
+        <item>SELECT</item>
+        <item>Panda</item>
+        <item>Random</item>
     </string-array>
 
 </resources>

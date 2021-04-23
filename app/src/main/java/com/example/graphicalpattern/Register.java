@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.graphicalpattern.model.username;
+
+import io.paperdb.Paper;
 
 public class Register extends AppCompatActivity {
     private EditText uName;
@@ -36,7 +39,7 @@ public class Register extends AppCompatActivity {
         CreatePattern = (Button)findViewById(R.id.btnCreatePattern);
 
         category = (Spinner)findViewById(R.id.spinner);
-        //Paper.init(this);
+        Paper.init(this);
 
         CreatePattern.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +56,21 @@ public class Register extends AppCompatActivity {
                 }
 
             }
+        });
+        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String item= parentView.getSelectedItem().toString();
+                //Toast.makeText(Register.this,item,Toast.LENGTH_SHORT).show();
+                Paper.book().write("category",item);
+                System.out.println("category:"+item);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
         });
     }
 

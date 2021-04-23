@@ -7,10 +7,14 @@ import io.paperdb.Paper;
 public class password {
     private String PASSWORD_KEY = "PASSWORD KEY";
     public String PATTERN_SET = "PATTERN SET";
+    public String PATTERN_NOT_SAME="Pattern Entered should be same for the second time";
     public String CONFIRM_PATTERN = "Draw the pattern again to confirm";
-    public String INCORRECT_PATTERN = "Please try again ";
+    public String INCORRECT_PATTERN1 = "Please try again, You have only 2 attempts Left ";
+    public String INCORRECT_PATTERN2 = "Please try again, You have only 1 attempt Left ";
+    public String INCORRECT_PATTERN3 = "Wrong Password, Out of Attempts! ";
+
     public String FIRST_USE = "Draw an unlock pattern please ";
-    public String SCHEMA_FAILED = "You must at least connect 4 dots";
+    public String SCHEMA_FAILED = "You must at least use 3 images";
     public String isFirst="true";
 
     public password(Context context){

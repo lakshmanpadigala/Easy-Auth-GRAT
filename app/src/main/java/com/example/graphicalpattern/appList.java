@@ -31,8 +31,6 @@ public class appList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         ////
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -44,6 +42,12 @@ public class appList extends AppCompatActivity {
 
 
     }
+
+    /*@Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }*/
 
     private void initView() {
         RecyclerView recyclerView=findViewById(R.id.recycleView);
@@ -67,7 +71,6 @@ public class appList extends AppCompatActivity {
         for(ResolveInfo resolveInfo: infos){
             ActivityInfo activityInfo = resolveInfo.activityInfo;
             items.add(new Myitem(activityInfo.loadIcon(manager),activityInfo.loadLabel(manager).toString(),activityInfo.applicationInfo.packageName));
-
         }
         return items;
 

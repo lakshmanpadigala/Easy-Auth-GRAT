@@ -12,39 +12,37 @@ public class ImageAdapter extends BaseAdapter {
 
     public Context mContext;
     public static String []img ={"img1","img2","img3","img4","img5","img6","img7","img8","img9"};
+    static int []arr;
+            //={R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8,R.drawable.img9};
 
-    static int []arr={R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8,R.drawable.img9};
-    //int []arr1={R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8,R.drawable.img9};
     Random rand = new Random();
-    int l=arr.length;
+    int l=9;
 
     public ImageAdapter(Context mContext) {
         this.mContext = mContext;
         //for(int i=0;i<arr.length;i++){
           //  arr[i] = arr1[i];
         //}
-        for(int i = 0; i < l; i++) {
-            int randomIndexToSwap = rand.nextInt(arr.length);
-            int temp = arr[randomIndexToSwap];
-            arr[randomIndexToSwap] = arr[i];
-            arr[i] = temp;
+        //arr ->to ImageAdapter.arr******
+        /*for(int i = 0; i < l; i++) {
+            int randomIndexToSwap = rand.nextInt(ImageAdapter.arr.length);
+            int temp = ImageAdapter.arr[randomIndexToSwap];
+            ImageAdapter.arr[randomIndexToSwap] = ImageAdapter.arr[i];
+            ImageAdapter.arr[i] = temp;
             String temp1= img[randomIndexToSwap];
             img[randomIndexToSwap]=img[i];
             img[i]=temp1;
-        }
+        }*/
     }
 
-    /*public void swap(){
+    public void swap(){
         for(int i = 0; i < l; i++) {
             int randomIndexToSwap = rand.nextInt(arr.length);
             int temp = arr[randomIndexToSwap];
             arr[randomIndexToSwap] = arr[i];
             arr[i] = temp;
-            String temp1= img[randomIndexToSwap];
-            img[randomIndexToSwap]=img[i];
-            img[i]=temp1;
         }
-    }*/
+    }
 
     @Override
     public int getCount() {
@@ -71,7 +69,11 @@ public class ImageAdapter extends BaseAdapter {
 
         return imageView;
     }
-    public static int[] arrret(){
+    public static int[] arret(){
         return arr;
+    }
+
+    public void getType(int abc[]){
+        arr=abc;
     }
 }
