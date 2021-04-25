@@ -41,6 +41,7 @@ public class PatternPage extends AppCompatActivity {
     public static int[] arr;
     public int[] panda= {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6, R.drawable.img7, R.drawable.img8, R.drawable.img9};
     public int[] random={R.drawable.p1,R.drawable.p2,R.drawable.p3,R.drawable.p4,R.drawable.p5,R.drawable.p6,R.drawable.p7,R.drawable.p8,R.drawable.p9};
+    public int[] blurred={R.drawable.a,R.drawable.b,R.drawable.c,R.drawable.d,R.drawable.e,R.drawable.f,R.drawable.g,R.drawable.h,R.drawable.i};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,9 +78,12 @@ public class PatternPage extends AppCompatActivity {
         if(category.equals("Panda")){
             arr = panda;
             imgadp.getType(panda);
-        }else{
+        }else if(category.equals("Random")){
             arr = random;
             imgadp.getType(random);
+        }else if(category.equals("Blurred")){
+            arr = blurred;
+            imgadp.getType(blurred);
         }
         imgadp.swap();
         gridView.setAdapter(imgadp);
