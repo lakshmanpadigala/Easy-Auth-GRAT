@@ -1,5 +1,7 @@
 package com.example.graphicalpattern;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.graphicalpattern.adapter.MyAdapter;
 import com.example.graphicalpattern.model.Myitem;
+import com.example.graphicalpattern.utils.SharedPrefUtil;
 import com.example.graphicalpattern.utils.Utils;
 
 import java.util.ArrayList;
@@ -59,11 +62,16 @@ public class appList extends AppCompatActivity {
 
 
         layout_permission = findViewById(R.id.layout_permission);
+        //todo
+        //adapter.notifyDataSetChanged();
     }
 
     private List<Myitem> getApplications() {
         List<Myitem> items=new ArrayList<>();
         PackageManager manager = getPackageManager();
+        //List<String> list = SharedPrefUtil.getInstance(this).getListString();
+        //todo context error 22.30 mins
+
         Intent i = new Intent(Intent.ACTION_MAIN,null);
         i.addCategory(Intent.CATEGORY_LAUNCHER);
 
@@ -71,8 +79,21 @@ public class appList extends AppCompatActivity {
         for(ResolveInfo resolveInfo: infos){
             ActivityInfo activityInfo = resolveInfo.activityInfo;
             items.add(new Myitem(activityInfo.loadIcon(manager),activityInfo.loadLabel(manager).toString(),activityInfo.applicationInfo.packageName));
+            /*if(!list.isEmpty()){
+                
+                if(list.contains(activityInfo.applicationInfo.packageName)){
+                    items.add(new Myitem(activityInfo.loadIcon(manager),activityInfo.loadLabel(manager).toString(),activityInfo.applicationInfo.packageName));
+                }else{
+                    items.add(new Myitem(activityInfo.loadIcon(manager),activityInfo.loadLabel(manager).toString(),activityInfo.applicationInfo.packageName,0));
+                }
+            }else {
+                items.add(new Myitem(activityInfo.loadIcon(manager),activityInfo.loadLabel(manager).toString(),activityInfo.applicationInfo.packageName,0));
+            }*/
+
         }
+
         return items;
+
 
     }
 
@@ -109,5 +130,6 @@ public class appList extends AppCompatActivity {
             }
         }
         super.onResume();
+
     }
 }

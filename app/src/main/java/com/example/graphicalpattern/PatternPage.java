@@ -1,12 +1,18 @@
 package com.example.graphicalpattern;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.graphicalpattern.model.password;
+import com.example.graphicalpattern.services.BackgroundManager;
+import com.example.graphicalpattern.utils.Utils;
 import com.shuhart.stepview.StepView;
 
 import io.paperdb.Paper;
@@ -46,6 +54,12 @@ public class PatternPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern_page);
+
+        //todo in pattern page
+
+        BackgroundManager.getInstance().init(this).startService();
+        initIconeApp();
+
         Paper.init(this);
         if(Paper.book().read("count")==null){
             Paper.book().write("count",3);
@@ -174,6 +188,20 @@ public class PatternPage extends AppCompatActivity {
         //
     }
 
+    private void initIconeApp() {
+        if(getIntent().getStringExtra("broadcast_reciever") != null){
+            ImageView icone = findViewById(R.id.app_icon);
+            String current_app = new Utils(this).getLastApp();
+            ApplicationInfo applicationInfo = null;
+            try{
+                applicationInfo = getPackageManager().getApplicationInfo(current_app,0);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            icone.setImageDrawable(applicationInfo.loadIcon(getPackageManager()));
+        }
+    }
+
     @Override
     protected void onResume() {
         System.out.println("Resume is happening!"+"okay...!");
@@ -207,15 +235,29 @@ public class PatternPage extends AppCompatActivity {
             //g1.setData("NEW");
             stateText.setText(Mpassword.FIRST_USE);
         }else{
+            startCurrentHomePackage();
             finish();
             super.onBackPressed();
         }
     }
 
+    private void startCurrentHomePackage() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        ResolveInfo resolveInfo = getPackageManager().resolveActivity(intent,PackageManager.MATCH_DEFAULT_ONLY);
+
+        ActivityInfo activityInfo = resolveInfo.activityInfo;
+        ComponentName componentName = new ComponentName(activityInfo.applicationInfo.packageName,activityInfo.name);
+        startActivity(intent);
+    }
+
     private void gotoAppList() {
         System.out.println("happy to see the applist!");
-        Intent ia = new Intent(PatternPage.this,appList.class);
-        startActivity(ia);
+        if(getIntent().getStringExtra("broadcast_receiver") == null){
+            Intent ia = new Intent(PatternPage.this,appList.class);
+            startActivity(ia);
+        }
+        finish();
     }
 
 }

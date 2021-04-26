@@ -7,6 +7,8 @@ public class Myitem {
     private String packageName;
     private String name;
 
+
+
     public Myitem(Drawable icon, String packageName, String name) {
         this.icon = icon;
         this.packageName = packageName;
@@ -36,4 +38,6 @@ public class Myitem {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

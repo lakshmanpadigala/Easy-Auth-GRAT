@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Graphical Pattern</string>
+    <string name="app_name">Graphical Pattern Lock</string>
     <string-array name="category">
         <item>SELECT</item>
         <item>Panda</item>
