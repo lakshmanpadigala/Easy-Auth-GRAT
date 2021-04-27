@@ -22,19 +22,21 @@ public class ServiceApplockJOBIntent extends JobIntentService {
 
     @Override
     public void onDestroy() {
+
         BackgroundManager.getInstance().init(this).startAlarmManager();
         super.onDestroy();
     }
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
+        BackgroundManager.getInstance().init(this).startService();
         BackgroundManager.getInstance().init(this).startAlarmManager();
         super.onTaskRemoved(rootIntent);
     }
 
     public void runApplock(){
 
-        long endTime = System.currentTimeMillis()+210;
+        long endTime = System.currentTimeMillis()+1000;
         while(System.currentTimeMillis() < endTime){
             synchronized (this){
                 try{

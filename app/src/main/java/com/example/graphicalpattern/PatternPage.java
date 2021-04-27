@@ -249,6 +249,8 @@ public class PatternPage extends AppCompatActivity {
         ActivityInfo activityInfo = resolveInfo.activityInfo;
         ComponentName componentName = new ComponentName(activityInfo.applicationInfo.packageName,activityInfo.name);
         startActivity(intent);
+
+        new Utils(this).clearLastApp();
     }
 
     private void gotoAppList() {

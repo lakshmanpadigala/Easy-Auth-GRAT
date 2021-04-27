@@ -51,8 +51,9 @@ public class BackgroundManager {
 
     public void stopService(Class<?> ServiceClass){
         if(isServiceRunning(ServiceClass)){
-            context.startService(new Intent(context,ServiceClass));
+            context.stopService(new Intent(context,ServiceClass));
         }
+        //todo startService//
     }
 
     public void startAlarmManager(){
