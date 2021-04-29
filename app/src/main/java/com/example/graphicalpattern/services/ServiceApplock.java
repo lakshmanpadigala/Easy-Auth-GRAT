@@ -14,8 +14,8 @@ public class ServiceApplock extends IntentService {
     }
 
     public void runApplock(){
-
-        long endTime = System.currentTimeMillis()+210;
+        //todo 210 to 1000
+        long endTime = System.currentTimeMillis()+1000;
         while(System.currentTimeMillis() < endTime){
             synchronized (this){
                 try{
@@ -28,11 +28,14 @@ public class ServiceApplock extends IntentService {
             }
         }
     }
+
     @Override
     public int onStartCommand(@Nullable Intent intent,int flags,int startId){
         runApplock();
         return super.onStartCommand(intent, flags, startId);
     }
+
+
     @Override
     public void onTaskRemoved(Intent rootIntent){
         BackgroundManager.getInstance().init(this).startService();

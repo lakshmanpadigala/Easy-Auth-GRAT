@@ -16,6 +16,8 @@ import java.util.List;
 
 import io.paperdb.Paper;
 
+import static android.app.AppOpsManager.MODE_ALLOWED;
+
 public class Utils {
     private  String EXTRA_LAST_APP = "EXTRA_LAST_APP";
     private Context ctx;
@@ -28,20 +30,27 @@ public class Utils {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static boolean PermissionCheck(Context c){
         AppOpsManager opsManager = (AppOpsManager)c.getSystemService(Context.APP_OPS_SERVICE);
-        int mode = opsManager.unsafeCheckOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,Process.myUid(),c.getPackageName());
-        return mode== AppOpsManager.MODE_ALLOWED;
+        int mode = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            mode = opsManager.unsafeCheckOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(),c.getPackageName());
+        }
+        return mode == MODE_ALLOWED;
     }
 
 
     public boolean isLock(String packageName) {
         return Paper.book().read(packageName) != null;
     }
+
     public void lock(String pk){
-        Paper.book().write(pk,pk);
+        Paper.book().write(pk,"lock");
+        //todo pk pk paper write...
     }
+
     public void unlock(String pk){
         Paper.book().delete(pk);
     }
+
     public void setLastApp(String pk){
         Paper.book().write("EXTRA_LAST_APP",pk);
     }
@@ -53,7 +62,9 @@ public class Utils {
     public void clearLastApp() {
         Paper.book().delete(EXTRA_LAST_APP);
     }
+
     UsageStatsManager usageStatsManager;
+
     public String getLauncherTopApp() {
         ActivityManager manager = (ActivityManager)ctx.getSystemService(Context.ACTIVITY_SERVICE);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){

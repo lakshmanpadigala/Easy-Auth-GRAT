@@ -12,10 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.graphicalpattern.R;
 import com.example.graphicalpattern.ViewHolder.MyViewHolder;
 import com.example.graphicalpattern.model.Myitem;
-import com.example.graphicalpattern.utils.SharedPrefUtil;
 import com.example.graphicalpattern.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
@@ -61,20 +59,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
             @Override
             public void onClick(View v) {
                 if(utils.isLock(pk)){
-                    //apps.get(position).setStatus(1);
                     utils.unlock(pk);
                     holder.lock_icon.setImageResource(R.drawable.ic_baseline_lock_open_24);
                     Toast.makeText(ctx,apps.get(position).getName()+" is unlocked",Toast.LENGTH_SHORT).show();
-
-                    //lockedApps.add(apps.get(position).getPackageName());
-                    //SharedPrefUtil.getInstance(ctx).putListString(lockedApps);
                 }
                 else{
                     utils.lock(pk);
                     holder.lock_icon.setImageResource(R.drawable.ic_baseline_lock_24);
                     Toast.makeText(ctx,apps.get(position).getName()+" is locked",Toast.LENGTH_SHORT).show();
-                    //lockedApps.remove(apps.get(position).getPackageName());
-                    //SharedPrefUtil.getInstance(ctx).putListString(lockedApps);
                 }
             }
         });

@@ -1,6 +1,7 @@
 package com.example.graphicalpattern;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
@@ -9,19 +10,28 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.graphicalpattern.model.password;
 import com.example.graphicalpattern.services.BackgroundManager;
 import com.example.graphicalpattern.utils.Utils;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.shuhart.stepview.StepView;
 
 import io.paperdb.Paper;
@@ -29,6 +39,7 @@ import io.paperdb.Paper;
 public class PatternPage extends AppCompatActivity {
     private Button btnForgotPattern;
     private Button btnOk;
+    FirebaseAuth fAuth;
     private String password="";
     GridView gridView;
     //
@@ -54,8 +65,10 @@ public class PatternPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern_page);
-
+        fAuth = FirebaseAuth.getInstance();
         //todo in pattern page
+
+        final Animation animation = AnimationUtils.loadAnimation(this,R.anim.buttin_anim);
 
         BackgroundManager.getInstance().init(this).startService();
         initIconeApp();
@@ -79,6 +92,7 @@ public class PatternPage extends AppCompatActivity {
         btnForgotPattern = (Button) findViewById(R.id.btnForgot);
         btnOk = (Button) findViewById(R.id.btnOkay);
         /////////btnOk.setEnabled(true);
+        System.out.println("arey babu patternpage");
         if(Paper.book().read("count").equals(0)){
             stateText.setText(Mpassword.INCORRECT_PATTERN3);
             btnOk.setEnabled(false);
@@ -89,7 +103,7 @@ public class PatternPage extends AppCompatActivity {
 
         String category=Paper.book().read("category");
         System.out.println(category+" .see here for category!");
-        if(category.equals("Panda")){
+        /*if(category.equals("Panda")){
             arr = panda;
             imgadp.getType(panda);
         }else if(category.equals("Random")){
@@ -98,15 +112,55 @@ public class PatternPage extends AppCompatActivity {
         }else if(category.equals("Blurred")){
             arr = blurred;
             imgadp.getType(blurred);
-        }
+        }*/
+        //todo change images here......
+        imgadp.getType(blurred);
         imgadp.swap();
         gridView.setAdapter(imgadp);
         img = imgadp.arret();
+        //gridView.getLayoutAnimation();
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //System.out.println("position:"+position);
                 //System.out.println(img[0]);
+                if(Mpassword.getPASSWORD_KEY() == null){
+                    /*switch(position){
+                        case 1:
+                            view.clearAnimation();
+                            view.startAnimation(animation);
+                        case 2:
+                            view.clearAnimation();
+                            view.startAnimation(animation);
+                        case 3:
+                            view.clearAnimation();
+                            view.startAnimation(animation);
+                        case 4:
+                            view.clearAnimation();
+                            view.startAnimation(animation);
+                        case 5:
+                            view.clearAnimation();
+                            view.startAnimation(animation);
+                        case 6:
+                            view.clearAnimation();
+                            view.startAnimation(animation);
+                        case 7:
+                            view.clearAnimation();
+                            view.startAnimation(animation);
+                        case 8:
+                            view.clearAnimation();
+                            view.startAnimation(animation);
+                        case 9:
+                            view.clearAnimation();
+                            view.startAnimation(animation);
+                        default:
+                            view.clearAnimation();
+                    }*/
+                    view.startAnimation(animation);
+                }else{
+                    view.clearAnimation();
+                }
                 password += img[position];
                 System.out.println("password:"+password);
                 //Toast.makeText(getApplicationContext(), "Hello There!" + password, Toast.LENGTH_SHORT).show();
@@ -116,8 +170,45 @@ public class PatternPage extends AppCompatActivity {
         btnForgotPattern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i1 = new Intent(PatternPage.this,ForgetPattern.class);
-                startActivity(i1);
+
+                final EditText resetMail = new EditText(v.getContext());
+                final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
+                passwordResetDialog.setTitle("Reset Password ?");
+                passwordResetDialog.setMessage("Enter Your Email To Received Reset Link.");
+                passwordResetDialog.setView(resetMail);
+
+                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // extract the email and send reset link
+                        String mail = resetMail.getText().toString();
+                        fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(PatternPage.this, "Reset Link Sent To Your Email.", Toast.LENGTH_SHORT).show();
+                                Mpassword.onDeletefirst();
+                                Mpassword.onDelete();
+                                fAuth.signOut();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(PatternPage.this, "Error ! Reset Link is Not Sent" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                });
+
+                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // close the dialog
+                    }
+                });
+                if(Mpassword.getFirst()!=null){
+                    passwordResetDialog.create().show();
+                }
             }
         });
 
@@ -244,10 +335,12 @@ public class PatternPage extends AppCompatActivity {
     private void startCurrentHomePackage() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
+
         ResolveInfo resolveInfo = getPackageManager().resolveActivity(intent,PackageManager.MATCH_DEFAULT_ONLY);
 
         ActivityInfo activityInfo = resolveInfo.activityInfo;
         ComponentName componentName = new ComponentName(activityInfo.applicationInfo.packageName,activityInfo.name);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         startActivity(intent);
 
         new Utils(this).clearLastApp();
@@ -255,7 +348,7 @@ public class PatternPage extends AppCompatActivity {
 
     private void gotoAppList() {
         System.out.println("happy to see the applist!");
-        if(getIntent().getStringExtra("broadcast_receiver") == null){
+        if(getIntent().getStringExtra("broadcast_reciever") == null){
             Intent ia = new Intent(PatternPage.this,appList.class);
             startActivity(ia);
         }

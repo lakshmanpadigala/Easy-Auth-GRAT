@@ -13,6 +13,7 @@ import com.example.graphicalpattern.broadcast.RestartServiceWhenStopped;
 public class BackgroundManager {
     private static final int period = 15*10000;
     private static final int ALARM_ID = 159874;
+
     private Context context;
     private static BackgroundManager instance;
 
@@ -22,10 +23,14 @@ public class BackgroundManager {
         }
         return instance;
     }
+
+
     public BackgroundManager init(Context c){
         context = c;
         return this;
     }
+
+
     public boolean isServiceRunning(Class<?> ServiceClass){
         ActivityManager manager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
         for(ActivityManager.RunningServiceInfo serviceInfo:manager.getRunningServices(Integer.MAX_VALUE)){
@@ -62,6 +67,7 @@ public class BackgroundManager {
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         manager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+period,pendingIntent);
     }
+
     public void stopAlarm(){
         Intent intent= new Intent(context, RestartServiceWhenStopped.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ALARM_ID,intent, 0);

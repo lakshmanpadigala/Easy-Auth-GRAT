@@ -24,7 +24,7 @@ public class ReceiverApplock extends BroadcastReceiver {
 //todo asal dhi ikayday undhi mitrama...:;^)
                 Intent i = new Intent(context, PatternPage.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                i.putExtra("broadcast_receiver","broadcast_receiver");
+                i.putExtra("broadcast_reciever","broadcast_reciever");
                 context.startActivity(i);
             }
         }

@@ -15,6 +15,7 @@ public class ServiceApplockJOBIntent extends JobIntentService {
     public static void enqueueWork(Context context,Intent work){
         enqueueWork(context,ServiceApplockJOBIntent.class,JOB_ID,work);
     }
+
     @Override
     protected void onHandleWork(@NonNull Intent intent) {
         runApplock();
@@ -22,7 +23,7 @@ public class ServiceApplockJOBIntent extends JobIntentService {
 
     @Override
     public void onDestroy() {
-
+        BackgroundManager.getInstance().init(this).startService();
         BackgroundManager.getInstance().init(this).startAlarmManager();
         super.onDestroy();
     }
@@ -35,7 +36,6 @@ public class ServiceApplockJOBIntent extends JobIntentService {
     }
 
     public void runApplock(){
-
         long endTime = System.currentTimeMillis()+1000;
         while(System.currentTimeMillis() < endTime){
             synchronized (this){

@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.graphicalpattern">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
-
+    <uses-permission android:name="android.permission.REAL_GET_TASKS " />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
@@ -20,40 +21,49 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Navigator" >
+        <activity android:name=".imageFirebase"></activity>
+        <activity android:name=".LoginFirebase" />
+        <activity android:name=".RegisterFirebase">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Navigator">
+
         </activity>
         <activity
             android:name=".appList"
             android:theme="@style/FULLSCREEN" />
-        <activity android:name=".ForgetPattern" />
         <activity android:name=".PatternPage" />
-        <activity android:name=".Register">
 
-        </activity>
 
-        <receiver android:name=".broadcast.ReceiverApplock"
+        <receiver
+            android:name=".broadcast.ReceiverApplock"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
         <receiver
             android:name=".broadcast.RestartServiceWhenStopped"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".services.ServiceApplock"
-            android:exported="true"
-            android:enabled="true"/>
+        <service
+            android:name=".services.ServiceApplock"
+            android:enabled="true"
+            android:exported="false" />
         <service
             android:name=".services.ServiceApplockJOBIntent"
             android:enabled="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

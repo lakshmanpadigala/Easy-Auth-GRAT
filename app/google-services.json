@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "960502376042",
+    "project_id": "graphical-pattern-lock",
+    "storage_bucket": "graphical-pattern-lock.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960502376042:android:c75df7bc3f3e5efeab8c13",
+        "android_client_info": {
+          "package_name": "com.example.graphicalpattern"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960502376042-lu8la1cpjquq8gn1gm5u7uo51geu4scb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4OGZysHKO3oL_ay70kV_DRYcChvncAmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960502376042-lu8la1cpjquq8gn1gm5u7uo51geu4scb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
